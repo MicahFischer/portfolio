@@ -16,11 +16,16 @@ export function Cursor() {
 
     document.documentElement.classList.add("has-custom-cursor");
 
-    const dot = dotRef.current;
-    const circle = circleRef.current;
-    const orbit = orbitRef.current;
-    const orbitText = orbitTextRef.current;
-    if (!dot || !circle || !orbit || !orbitText) return;
+    const dotNode = dotRef.current;
+    const circleNode = circleRef.current;
+    const orbitNode = orbitRef.current;
+    const orbitTextNode = orbitTextRef.current;
+    if (!dotNode || !circleNode || !orbitNode || !orbitTextNode) return;
+
+    const dot: HTMLDivElement = dotNode;
+    const circle: HTMLDivElement = circleNode;
+    const orbit: HTMLDivElement = orbitNode;
+    const orbitText: SVGTextPathElement = orbitTextNode;
 
     let x = 0;
     let y = 0;

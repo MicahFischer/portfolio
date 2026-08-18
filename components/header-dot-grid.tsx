@@ -12,14 +12,17 @@ export function HeaderDotGrid({
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const canvasNode = canvasRef.current;
+    if (!canvasNode) return;
 
-    const ctx = canvas.getContext("2d", {
+    const ctxNode = canvasNode.getContext("2d", {
       alpha: true,
       desynchronized: true,
     });
-    if (!ctx) return;
+    if (!ctxNode) return;
+
+    const canvas: HTMLCanvasElement = canvasNode;
+    const ctx: CanvasRenderingContext2D = ctxNode;
 
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
