@@ -1,0 +1,116 @@
+@import url("https://use.typekit.net/fqh4bhq.css");
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --blue: #1874b8;
+  --sea: #2cb5a0;
+  --sea-strong: #1a8072;
+  --sage: var(--blue);
+  --ink: #333333;
+  --muted: #666666;
+  --surface: #f6f6f7;
+  --header: rgba(255, 255, 255, 0.7);
+  --rule: rgba(0, 0, 0, 0.6);
+  --highlight: var(--blue);
+  --highlight-strong: #146298;
+  --font-neue-haas: "neue-haas-grotesk-display", "Neue Haas Grotesk Display Pro",
+    "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-new-kansas: "new-kansas", "new-spirit", Georgia, serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-blue: var(--blue);
+  --color-sea: var(--sea);
+  --color-sea-strong: var(--sea-strong);
+  --color-sage: var(--sage);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-header: var(--header);
+  --color-rule: var(--rule);
+  --color-highlight: var(--highlight);
+  --color-highlight-strong: var(--highlight-strong);
+  --font-sans: var(--font-neue-haas);
+  --font-mono: var(--font-dm-mono);
+  --font-heading: var(--font-new-kansas);
+}
+
+@utility btn-label {
+  display: block;
+  line-height: 1;
+  text-box: trim-both cap alphabetic;
+}
+
+@utility heading {
+  font-family: var(--font-new-kansas);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+@utility site-width {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1400px;
+  padding-inline: 24px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-neue-haas);
+}
+
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+
+@keyframes cursor-orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cursor-orbit-spin {
+  animation: cursor-orbit-spin 12s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-orbit-spin {
+    animation: none;
+  }
+}
+
+::selection {
+  background: var(--blue);
+  color: #ffffff;
+}
+
+.material-symbols-sharp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: "Material Symbols Sharp";
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  direction: ltr;
+  user-select: none;
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
