@@ -3,6 +3,7 @@ import { Contact } from "@/components/contact";
 import { CopyEmailButton } from "@/components/copy-email-button";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { HeaderDotGrid } from "@/components/header-dot-grid";
 import { Icon } from "@/components/icon";
 import { caseStudies } from "@/lib/site";
 
@@ -17,9 +18,12 @@ export default function WorkPage() {
     <div className="flex min-h-full flex-col bg-background">
       <Header />
 
-      <section className="w-full bg-background py-[100px]">
-        <div className="site-width flex flex-col items-start">
-          <div className="flex max-w-[680px] flex-col items-start gap-2.5">
+      <section className="under-header relative bg-background">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <HeaderDotGrid />
+        </div>
+        <div className="site-width relative z-10 overflow-hidden">
+          <div className="flex max-w-[680px] flex-col items-start gap-2.5 border-x border-black/10 bg-gradient-to-b from-[#e8f3fa]/90 to-[#e5f6f2]/90 px-8 py-16 backdrop-blur-2xl md:px-10 md:py-24">
             <p className="font-mono text-[14px] leading-normal tracking-[1.4px] text-muted uppercase">
               Micah Fischer
             </p>

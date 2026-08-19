@@ -43,7 +43,7 @@ export default function Home() {
     <div className="flex min-h-full flex-col bg-background">
       <Header />
 
-      <section className="relative bg-background">
+      <section className="under-header relative bg-background">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <HeaderDotGrid />
         </div>

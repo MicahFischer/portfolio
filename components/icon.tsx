@@ -1,4 +1,5 @@
-type IconName =
+export type IconName =
+  | "arrow_back"
   | "arrow_forward"
   | "lock"
   | "mail"
@@ -6,7 +7,12 @@ type IconName =
   | "content_copy"
   | "check"
   | "chevron_left"
-  | "chevron_right";
+  | "chevron_right"
+  | "warning"
+  | "slab_serif"
+  | "calculate"
+  | "text_compare"
+  | "hourglass";
 
 export function Icon({
   name,
@@ -14,7 +20,7 @@ export function Icon({
   className = "",
 }: {
   name: IconName;
-  size?: 20 | 24 | 32;
+  size?: number;
   className?: string;
 }) {
   return (

@@ -11,13 +11,13 @@
   --ink: #333333;
   --muted: #666666;
   --surface: #f6f6f7;
-  --header: rgba(255, 255, 255, 0.7);
+  --header: rgba(255, 255, 255, 0.28);
   --rule: rgba(0, 0, 0, 0.6);
   --highlight: var(--blue);
   --highlight-strong: #146298;
   --font-neue-haas: "neue-haas-grotesk-display", "Neue Haas Grotesk Display Pro",
     "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-new-kansas: "new-kansas", "new-spirit", Georgia, serif;
+  --font-new-kansas: "new-kansas", Georgia, serif;
 }
 
 @theme inline {
@@ -46,7 +46,7 @@
 }
 
 @utility heading {
-  font-family: var(--font-new-kansas);
+  font-family: var(--font-heading);
   font-weight: 400;
   font-style: normal;
   line-height: 1.15;
@@ -58,6 +58,16 @@
   width: 100%;
   max-width: 1400px;
   padding-inline: 24px;
+}
+
+@utility under-header {
+  margin-top: -8.25rem;
+  padding-top: 8.25rem;
+
+  @media (min-width: 768px) {
+    margin-top: -5.75rem;
+    padding-top: 5.75rem;
+  }
 }
 
 html {
@@ -82,12 +92,26 @@ html.has-custom-cursor * {
   }
 }
 
+@keyframes slide-up {
+  from {
+    transform: translate3d(0, 5rem, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .cursor-orbit-spin {
   animation: cursor-orbit-spin 12s linear infinite;
 }
 
+.slide-up {
+  animation: slide-up 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .cursor-orbit-spin {
+  .cursor-orbit-spin,
+  .slide-up {
     animation: none;
   }
 }

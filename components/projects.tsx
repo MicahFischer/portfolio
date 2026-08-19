@@ -1,57 +1,27 @@
 "use client";
 
 import {
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
   type MouseEvent,
   type PointerEvent,
 } from "react";
+import { FrostButton, frostCircleClass } from "@/components/frost-button";
 import { Icon } from "@/components/icon";
 import { HeaderDotGrid } from "@/components/header-dot-grid";
+import { MacScreenshot } from "@/components/mac-screenshot";
 import { caseStudies } from "@/lib/site";
 import Link from "next/link";
 
 const projectCtaClass =
-  "group inline-flex shrink-0 items-center gap-3 text-white transition-colors duration-500 group-hover/card:text-black group-focus-within/card:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
-
-const projectCtaCircleClass =
-  "inline-flex size-12 items-center justify-center rounded-full border border-white bg-transparent transition-colors duration-500 group-hover/card:border-black group-hover/card:bg-black group-hover/card:text-white group-focus-within/card:border-black group-focus-within/card:bg-black group-focus-within/card:text-white";
+  "inline-flex shrink-0 items-center gap-3 text-white transition-colors duration-500 group-hover/card:text-black group-focus-within/card:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
 
 const arrowClass =
-  "absolute top-1/2 z-20 inline-flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-foreground shadow-[0_8px_24px_rgba(15,23,42,0.14)]";
+  "absolute top-1/2 z-20 size-12 -translate-y-1/2";
 
 const last = caseStudies.length - 1;
-
-function MacScreenshot({
-  image,
-  alt,
-  className = "",
-}: {
-  image: string;
-  alt: string;
-  className?: string;
-}) {
-  return (
-    <div
-      className={`w-full overflow-hidden rounded-[10px] border border-black/10 bg-[#e8e8e8] shadow-[0_18px_40px_rgba(15,23,42,0.18)] [backface-visibility:hidden] ${className}`}
-    >
-      <div className="flex h-10 items-center gap-[8px] bg-gradient-to-b from-[#f6f6f6] to-[#e8e8e8] px-3.5" aria-hidden>
-        <span className="size-3 rounded-full bg-[#ff5f57] shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.2)]" />
-        <span className="size-3 rounded-full bg-[#febc2e] shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.2)]" />
-        <span className="size-3 rounded-full bg-[#28c840] shadow-[inset_0_0_0_0.5px_rgba(0,0,0,0.2)]" />
-      </div>
-      <img
-        src={image}
-        alt={alt}
-        width={1872}
-        height={963}
-        draggable={false}
-        className="pointer-events-none block h-auto w-full [-webkit-user-drag:none]"
-      />
-    </div>
-  );
-}
 
 function rubber(delta: number, index: number) {
   if (index <= 0 && delta > 0) return delta * 0.32;
@@ -65,15 +35,15 @@ const screenshotSlotClass =
 function ProjectCardBackdrop() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      <div className="absolute inset-0 bg-[linear-gradient(155deg,var(--sea)_0%,#2498b4_42%,var(--blue)_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(80%_70%_at_18%_8%,rgba(255,255,255,0.28),transparent_58%)]" />
-      <HeaderDotGrid interactive={false} variant="card" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#e8f3fa] via-[#e5f6f2]/80 to-white" />
+      <HeaderDotGrid interactive={false} variant="hero" />
     </div>
   );
 }
 
 export function Projects() {
   const [index, setIndex] = useState(0);
+  const [imageIn, setImageIn] = useState(false);
   const indexRef = useRef(0);
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -87,6 +57,28 @@ export function Projects() {
   });
   const suppressClickRef = useRef(false);
   indexRef.current = index;
+
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setImageIn(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setImageIn(true);
+        observer.disconnect();
+      },
+      { threshold: 0.28 },
+    );
+
+    observer.observe(viewport);
+    return () => observer.disconnect();
+  }, []);
 
   function applyTransform(nextIndex: number, offsetPx: number, animate: boolean) {
     const track = trackRef.current;
@@ -184,24 +176,28 @@ export function Projects() {
 
       <div className="relative mt-12">
         {index > 0 ? (
-          <button
-            type="button"
+          <FrostButton
             className={`${arrowClass} left-[max(4px,calc((100%-1400px)/2+8px))] md:left-[max(8px,calc((100%-1400px)/2+8px))]`}
             aria-label="Previous project"
             onClick={() => setIndex((current) => Math.max(0, current - 1))}
           >
-            <Icon name="chevron_left" />
-          </button>
+            <Icon
+              name="chevron_left"
+              className="transition-transform duration-300 group-hover:-translate-x-0.5"
+            />
+          </FrostButton>
         ) : null}
         {index < last ? (
-          <button
-            type="button"
+          <FrostButton
             className={`${arrowClass} right-[max(4px,calc((100%-1400px)/2+8px))] md:right-[max(8px,calc((100%-1400px)/2+8px))]`}
             aria-label="Next project"
             onClick={() => setIndex((current) => Math.min(last, current + 1))}
           >
-            <Icon name="chevron_right" />
-          </button>
+            <Icon
+              name="chevron_right"
+              className="transition-transform duration-300 group-hover:translate-x-0.5"
+            />
+          </FrostButton>
         ) : null}
 
         <div
@@ -219,7 +215,7 @@ export function Projects() {
               <article
                 key={study.title}
                 aria-hidden={studyIndex !== index}
-                className={`group/card relative h-[min(80vh,720px)] w-full shrink-0 basis-full overflow-hidden rounded-[4px] border border-[#d6d6d8] bg-blue select-none ${
+                className={`group/card relative h-[min(80vh,720px)] w-full shrink-0 basis-full overflow-hidden rounded-[4px] border border-[#d6d6d8] bg-background select-none ${
                   study.locked || !study.href ? "" : "cursor-pointer"
                 }`}
                 data-cursor={
@@ -231,7 +227,9 @@ export function Projects() {
               >
                 <ProjectCardBackdrop />
                 {study.image ? (
-                  <div className={screenshotSlotClass}>
+                  <div
+                    className={`${screenshotSlotClass} ${imageIn ? "slide-up" : "translate-y-[5rem]"}`}
+                  >
                     <MacScreenshot image={study.image} alt="" />
                   </div>
                 ) : null}
@@ -267,7 +265,7 @@ export function Projects() {
                       <span className="font-sans text-base font-bold leading-none">
                         {study.cta}
                       </span>
-                      <span className={projectCtaCircleClass}>
+                      <span className={`${frostCircleClass} size-12`}>
                         <Icon name={study.locked ? "lock" : "arrow_forward"} />
                       </span>
                     </span>

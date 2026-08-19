@@ -5,9 +5,11 @@ import { useEffect, useRef } from "react";
 export function HeaderDotGrid({
   interactive = true,
   variant = "hero",
+  tone = "default",
 }: {
   interactive?: boolean;
   variant?: "hero" | "card";
+  tone?: "default" | "scarlet";
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -102,9 +104,15 @@ export function HeaderDotGrid({
 
       if (variant === "hero") {
         const wash = ctx.createLinearGradient(0, height, width, 0);
-        wash.addColorStop(0, "rgba(44, 181, 160, 0.18)");
-        wash.addColorStop(0.45, "rgba(34, 148, 172, 0.12)");
-        wash.addColorStop(1, "rgba(24, 116, 184, 0.16)");
+        if (tone === "scarlet") {
+          wash.addColorStop(0, "rgba(234, 88, 12, 0.32)");
+          wash.addColorStop(0.45, "rgba(249, 115, 22, 0.48)");
+          wash.addColorStop(1, "rgba(220, 70, 20, 0.68)");
+        } else {
+          wash.addColorStop(0, "rgba(44, 181, 160, 0.18)");
+          wash.addColorStop(0.45, "rgba(34, 148, 172, 0.12)");
+          wash.addColorStop(1, "rgba(24, 116, 184, 0.16)");
+        }
         ctx.fillStyle = wash;
         ctx.fillRect(0, 0, width, height);
       }
@@ -118,9 +126,15 @@ export function HeaderDotGrid({
           currentY,
           Math.max(width, height) * 0.58,
         );
-        glow.addColorStop(0, "rgba(44, 181, 160, 0.32)");
-        glow.addColorStop(0.4, "rgba(24, 116, 184, 0.14)");
-        glow.addColorStop(1, "rgba(24, 116, 184, 0)");
+        if (tone === "scarlet") {
+          glow.addColorStop(0, "rgba(249, 115, 22, 0.55)");
+          glow.addColorStop(0.4, "rgba(234, 88, 12, 0.28)");
+          glow.addColorStop(1, "rgba(194, 65, 12, 0)");
+        } else {
+          glow.addColorStop(0, "rgba(44, 181, 160, 0.32)");
+          glow.addColorStop(0.4, "rgba(24, 116, 184, 0.14)");
+          glow.addColorStop(1, "rgba(24, 116, 184, 0)");
+        }
         ctx.globalAlpha = hoverMix;
         ctx.fillStyle = glow;
         ctx.fillRect(0, 0, width, height);
@@ -219,7 +233,11 @@ export function HeaderDotGrid({
       ctx.lineCap = "round";
       ctx.lineWidth = 1;
       ctx.strokeStyle =
-        variant === "card" ? "rgba(255, 255, 255, 0.28)" : "rgba(0, 0, 0, 0.14)";
+        variant === "card"
+          ? "rgba(255, 255, 255, 0.28)"
+          : tone === "scarlet"
+            ? "rgba(0, 0, 0, 0.1)"
+            : "rgba(0, 0, 0, 0.14)";
       ctx.stroke();
 
       if (interactive) {
@@ -256,7 +274,7 @@ export function HeaderDotGrid({
       window.removeEventListener("resize", onResize);
       observer?.disconnect();
     };
-  }, [interactive, variant]);
+  }, [interactive, variant, tone]);
 
   return (
     <canvas

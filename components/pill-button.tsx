@@ -2,16 +2,7 @@ import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
 const pillClass =
-  "group relative inline-flex h-12 items-center gap-2.5 overflow-hidden rounded-full bg-blue pr-4 pl-5 font-sans text-[16px] leading-none font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue";
-
-function WipeFill() {
-  return (
-    <span
-      aria-hidden
-      className="absolute inset-0 origin-left scale-x-0 bg-[#146298] transition-transform duration-500 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100 motion-reduce:transition-none"
-    />
-  );
-}
+  "group relative inline-flex h-12 items-center gap-2.5 rounded-full border border-black/10 bg-gradient-to-b from-white/55 to-white/15 pr-4 pl-5 font-sans text-[16px] leading-none font-bold text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] backdrop-blur-md transition-[transform,background-color,border-color,box-shadow] duration-300 hover:scale-[1.03] hover:border-black/20 hover:from-white/80 hover:to-white/35 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_8px_20px_rgba(15,23,42,0.08)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue";
 
 export function PillButton({
   className = "",
@@ -20,7 +11,6 @@ export function PillButton({
 }: ComponentPropsWithoutRef<"button">) {
   return (
     <button type="button" className={`${pillClass} ${className}`} {...props}>
-      <WipeFill />
       <span className="relative z-10 inline-flex items-center gap-2.5">
         {children}
       </span>
@@ -39,7 +29,6 @@ export function PillLink({
 }) {
   return (
     <Link href={href} className={`${pillClass} ${className}`}>
-      <WipeFill />
       <span className="relative z-10 inline-flex items-center gap-2.5">
         {children}
       </span>

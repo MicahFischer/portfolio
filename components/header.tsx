@@ -11,7 +11,7 @@ const nav = [
 export function Header() {
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-black/10 bg-header backdrop-blur-lg">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-black/10 bg-header backdrop-blur-xl">
         <div className="site-width flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center justify-between gap-4">
             <Logo />

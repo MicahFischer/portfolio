@@ -29,7 +29,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_forward,check,chevron_left,chevron_right,content_copy,lock,mail,open_in_new&display=block"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back,arrow_forward,calculate,check,chevron_left,chevron_right,content_copy,hourglass,lock,mail,open_in_new,slab_serif,text_compare,warning&display=block"
         />
       </head>
       <body className="min-h-full bg-background font-sans text-foreground">
