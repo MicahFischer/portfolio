@@ -30,10 +30,11 @@ export function MacScreenshot({
   useEffect(() => {
     if (!parallax || !canParallax) return;
 
-    const layer = layerRef.current;
-    if (!layer) return;
+    const layerNode = layerRef.current;
+    if (!layerNode) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    const layer: HTMLDivElement = layerNode;
     const origin = window.scrollY;
     let raf = 0;
 
