@@ -56,6 +56,7 @@ function NavCard({
 
 export function CaseStudyNav({ currentHref }: { currentHref: string }) {
   const { previous, next } = getAdjacentCaseStudies(currentHref);
+  const single = previous.href === next.href;
 
   return (
     <section className="relative w-full overflow-hidden bg-background">
@@ -66,10 +67,18 @@ export function CaseStudyNav({ currentHref }: { currentHref: string }) {
       </div>
       <nav
         aria-label="Other case studies"
-        className="site-width relative z-10 grid grid-cols-1 gap-6 pt-[100px] pb-[100px] md:grid-cols-2"
+        className={`site-width relative z-10 grid grid-cols-1 gap-6 pt-[100px] pb-[100px] ${
+          single ? "" : "md:grid-cols-2"
+        }`}
       >
-        <NavCard study={previous} direction="previous" />
-        <NavCard study={next} direction="next" />
+        {single ? (
+          <NavCard study={next} direction="next" />
+        ) : (
+          <>
+            <NavCard study={previous} direction="previous" />
+            <NavCard study={next} direction="next" />
+          </>
+        )}
       </nav>
       <div className="relative z-10">
         <Footer overlay />

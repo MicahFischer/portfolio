@@ -91,7 +91,7 @@ export const caseStudies = [
     title:
       "Rapid AI enabled prototyping with multiplatform Kimedics Design System",
     description:
-      "I simplified the LittleBird app guest access interface into an intuitive step-by-step workflow that gives users greater control over their smart home and promotes security in multifamily communities.",
+      "I built a workflow connecting AI to our design system, product logic, and data model, accelerating the creation of realistic, interactive prototypes while creating more time for exploration and critical product thinking.",
     cta: "View Project",
     href: "/work/ai-prototyping",
     status: "Shipped",
@@ -109,38 +109,6 @@ export const caseStudies = [
     status: "Shipped",
     locked: false,
     image: "/assets/project-time-expense.jpg",
-  },
-  {
-    eyebrow: "Conceptual • 2024",
-    title: "Augmented reality powered grocery shopping way finding",
-    description:
-      "I conceptualized Carrot, a new augmented-reality grocery shopping app providing shoppers with guided directions through a grocery store, helping them shop their list quickly, saving them time and money.",
-    cta: "View Project",
-    href: "#",
-    status: "Conceptual",
-    locked: false,
-  },
-  {
-    eyebrow: "Case study • 2023",
-    title:
-      "Redesigning guest access for smart home communities for safety and peace of mind",
-    description:
-      "I simplified the LittleBird app guest access interface into an intuitive step-by-step workflow that gives users greater control over their smart home and promotes security in multifamily communities.",
-    cta: "View Project",
-    href: "#",
-    status: "Shipped",
-    locked: false,
-  },
-  {
-    eyebrow: "Project • 2023",
-    title:
-      "Arts program website for the largest private Christian university in the United States",
-    description:
-      "I developed a new website for Grand Canyon University's College of Arts and Media, which served as a tool for student recruitment, boosting program enrollment by approximately 20% across all programs.",
-    cta: "View Project",
-    href: "#",
-    status: "Shipped",
-    locked: false,
   },
 ];
 

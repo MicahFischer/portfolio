@@ -207,6 +207,31 @@ html.has-custom-cursor * {
   animation: timesheet-copy-enter 0.35s ease-out both;
 }
 
+.rolling-text {
+  display: inline-grid;
+  overflow: hidden;
+  vertical-align: middle;
+  line-height: 1.2;
+}
+
+.rolling-line {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rolling-line-enter {
+  transform: translate3d(0, 110%, 0);
+}
+
+.rolling-line-out {
+  transform: translate3d(0, -110%, 0);
+}
+
+.rolling-line-in {
+  transform: translate3d(0, 0, 0);
+}
+
 @media (min-width: 1024px) {
   .timesheet-marquee {
     height: 32rem;
@@ -223,6 +248,10 @@ html.has-custom-cursor * {
   .timesheet-enter-row > td,
   .timesheet-copy-enter {
     animation: none;
+  }
+
+  .rolling-line {
+    transition: none;
   }
 
   .timesheet-marquee {
