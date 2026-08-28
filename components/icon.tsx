@@ -12,7 +12,15 @@ export type IconName =
   | "slab_serif"
   | "calculate"
   | "text_compare"
-  | "hourglass";
+  | "hourglass"
+  | "contact_phone"
+  | "person"
+  | "expand_more"
+  | "grid_view"
+  | "table"
+  | "menu_book"
+  | "laptop_mac"
+  | "code";
 
 export function Icon({
   name,
@@ -32,7 +40,7 @@ export function Icon({
         width: size,
         height: size,
         lineHeight: 1,
-        fontVariationSettings: "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24",
+        fontVariationSettings: `'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' ${Math.min(48, Math.max(24, size))}`,
       }}
     >
       {name}

@@ -4,17 +4,19 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --blue: #1874b8;
+  --blue: #1a8494;
   --sea: #2cb5a0;
   --sea-strong: #1a8072;
   --sage: var(--blue);
   --ink: #333333;
   --muted: #666666;
-  --surface: #f6f6f7;
+  --surface: #f3f5f8;
   --header: rgba(255, 255, 255, 0.28);
   --rule: rgba(0, 0, 0, 0.6);
   --highlight: var(--blue);
-  --highlight-strong: #146298;
+  --highlight-strong: #146e7c;
+  --wash-from: #e8f3fa;
+  --wash-via: #e5f6f2;
   --font-neue-haas: "neue-haas-grotesk-display", "Neue Haas Grotesk Display Pro",
     "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-new-kansas: "new-kansas", Georgia, serif;
@@ -71,8 +73,13 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 6rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-scroll-behavior="smooth"] {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
@@ -94,25 +101,137 @@ html.has-custom-cursor * {
 
 @keyframes slide-up {
   from {
-    transform: translate3d(0, 5rem, 0);
+    opacity: 0;
+    transform: translate3d(0, 1.75rem, 0);
   }
   to {
+    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
+}
+
+.slide-up {
+  animation: slide-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .cursor-orbit-spin {
   animation: cursor-orbit-spin 12s linear infinite;
 }
 
-.slide-up {
-  animation: slide-up 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+.flow-chevrons-down {
+  animation: flow-chevrons-down 1.6s linear infinite;
+}
+
+.flow-chevrons-across {
+  animation: flow-chevrons-across 1.6s linear infinite;
+}
+
+@keyframes flow-chevrons-down {
+  from {
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes flow-chevrons-across {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes timesheet-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+.timesheet-marquee {
+  height: 28rem;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+}
+
+.timesheet-marquee-track {
+  animation: timesheet-marquee 42s linear infinite;
+}
+
+.timesheet-marquee:hover .timesheet-marquee-track,
+.timesheet-marquee:focus-within .timesheet-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes timesheet-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.timesheet-enter {
+  animation: timesheet-enter 0.48s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--enter-i, 0) * 70ms);
+}
+
+.timesheet-enter-row > td {
+  animation: timesheet-enter 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--enter-i, 0) * 55ms);
+}
+
+@keyframes timesheet-copy-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.timesheet-copy-enter {
+  animation: timesheet-copy-enter 0.35s ease-out both;
+}
+
+@media (min-width: 1024px) {
+  .timesheet-marquee {
+    height: 32rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .cursor-orbit-spin,
-  .slide-up {
+  .slide-up,
+  .flow-chevrons-down,
+  .flow-chevrons-across,
+  .timesheet-marquee-track,
+  .timesheet-enter,
+  .timesheet-enter-row > td,
+  .timesheet-copy-enter {
     animation: none;
+  }
+
+  .timesheet-marquee {
+    overflow-y: auto;
+    mask-image: none;
+  }
+
+  .timesheet-marquee [data-marquee-clone] {
+    display: none;
   }
 }
 

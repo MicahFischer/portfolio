@@ -9,7 +9,7 @@ export function HeaderDotGrid({
 }: {
   interactive?: boolean;
   variant?: "hero" | "card";
-  tone?: "default" | "scarlet";
+  tone?: "default" | "scarlet" | "vivid";
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -108,10 +108,14 @@ export function HeaderDotGrid({
           wash.addColorStop(0, "rgba(234, 88, 12, 0.32)");
           wash.addColorStop(0.45, "rgba(249, 115, 22, 0.48)");
           wash.addColorStop(1, "rgba(220, 70, 20, 0.68)");
+        } else if (tone === "vivid") {
+          wash.addColorStop(0, "rgba(44, 181, 160, 0.55)");
+          wash.addColorStop(0.45, "rgba(34, 148, 172, 0.42)");
+          wash.addColorStop(1, "rgba(26, 132, 148, 0.58)");
         } else {
           wash.addColorStop(0, "rgba(44, 181, 160, 0.18)");
           wash.addColorStop(0.45, "rgba(34, 148, 172, 0.12)");
-          wash.addColorStop(1, "rgba(24, 116, 184, 0.16)");
+          wash.addColorStop(1, "rgba(26, 132, 148, 0.16)");
         }
         ctx.fillStyle = wash;
         ctx.fillRect(0, 0, width, height);
@@ -130,10 +134,14 @@ export function HeaderDotGrid({
           glow.addColorStop(0, "rgba(249, 115, 22, 0.55)");
           glow.addColorStop(0.4, "rgba(234, 88, 12, 0.28)");
           glow.addColorStop(1, "rgba(194, 65, 12, 0)");
+        } else if (tone === "vivid") {
+          glow.addColorStop(0, "rgba(44, 181, 160, 0.5)");
+          glow.addColorStop(0.4, "rgba(26, 132, 148, 0.28)");
+          glow.addColorStop(1, "rgba(26, 132, 148, 0)");
         } else {
           glow.addColorStop(0, "rgba(44, 181, 160, 0.32)");
-          glow.addColorStop(0.4, "rgba(24, 116, 184, 0.14)");
-          glow.addColorStop(1, "rgba(24, 116, 184, 0)");
+          glow.addColorStop(0.4, "rgba(26, 132, 148, 0.14)");
+          glow.addColorStop(1, "rgba(26, 132, 148, 0)");
         }
         ctx.globalAlpha = hoverMix;
         ctx.fillStyle = glow;
@@ -237,7 +245,9 @@ export function HeaderDotGrid({
           ? "rgba(255, 255, 255, 0.28)"
           : tone === "scarlet"
             ? "rgba(0, 0, 0, 0.1)"
-            : "rgba(0, 0, 0, 0.14)";
+            : tone === "vivid"
+              ? "rgba(26, 132, 148, 0.28)"
+              : "rgba(0, 0, 0, 0.14)";
       ctx.stroke();
 
       if (interactive) {

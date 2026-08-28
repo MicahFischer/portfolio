@@ -1,46 +1,52 @@
 "use client";
 
-import { useEffect, useRef, useState, type AnimationEvent } from "react";
+import { useEffect, useRef } from "react";
 
 export function MacScreenshot({
   image,
   alt,
   className = "",
   parallax = false,
+  animateIn = parallax,
 }: {
   image: string;
   alt: string;
   className?: string;
   parallax?: boolean;
+  animateIn?: boolean;
 }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
   const layerRef = useRef<HTMLDivElement>(null);
-  const [canParallax, setCanParallax] = useState(!parallax);
 
   useEffect(() => {
     if (!parallax) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setCanParallax(true);
-      return;
-    }
 
-    const timeout = window.setTimeout(() => setCanParallax(true), 1100);
-    return () => window.clearTimeout(timeout);
-  }, [parallax]);
-
-  useEffect(() => {
-    if (!parallax || !canParallax) return;
-
+    const wrapNode = wrapRef.current;
     const layerNode = layerRef.current;
-    if (!layerNode) return;
+    if (!wrapNode || !layerNode) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    const wrap: HTMLDivElement = wrapNode;
     const layer: HTMLDivElement = layerNode;
-    const origin = window.scrollY;
+    let origin: number | null = null;
+    let range = 0;
     let raf = 0;
 
     function update() {
-      const lift = Math.min(Math.max(0, window.scrollY - origin) * 0.16, 140);
-      layer.style.transform = `translate3d(0, ${-lift}px, 0)`;
+      const rect = wrap.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      if (origin === null) {
+        if (rect.bottom <= 0 || rect.top >= vh) {
+          layer.style.transform = "translate3d(0, 0, 0)";
+          return;
+        }
+        origin = window.scrollY;
+        range = Math.max(rect.top + rect.height, vh);
+      }
+
+      const t = Math.min(Math.max((window.scrollY - origin) / range, 0), 1);
+      layer.style.transform = `translate3d(0, ${-(t * vh * 0.12)}px, 0)`;
     }
 
     function onScroll() {
@@ -48,26 +54,26 @@ export function MacScreenshot({
       raf = requestAnimationFrame(update);
     }
 
+    function onResize() {
+      origin = null;
+      range = 0;
+      onScroll();
+    }
+
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onResize);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
     };
-  }, [parallax, canParallax]);
-
-  function onEnterEnd(event: AnimationEvent<HTMLDivElement>) {
-    if (event.target !== event.currentTarget) return;
-    if (event.animationName !== "slide-up") return;
-    setCanParallax(true);
-  }
+  }, [parallax]);
 
   const windowFrame = (
     <div
-      className={`w-full overflow-hidden rounded-[10px] border border-black/10 bg-[#e8e8e8] shadow-[0_18px_40px_rgba(15,23,42,0.18)] [backface-visibility:hidden] ${className}`}
+      className={`w-full overflow-hidden rounded-[10px] border border-foreground/10 bg-[#e8e8e8] shadow-[0_18px_40px_rgba(15,23,42,0.18)] [backface-visibility:hidden] ${className}`}
     >
       <div
         className="flex h-10 items-center gap-[8px] bg-gradient-to-b from-[#f6f6f6] to-[#e8e8e8] px-3.5"
@@ -91,9 +97,11 @@ export function MacScreenshot({
   if (!parallax) return windowFrame;
 
   return (
-    <div className="slide-up" onAnimationEnd={onEnterEnd}>
-      <div ref={layerRef} className="will-change-transform">
-        {windowFrame}
+    <div className={animateIn ? "slide-up" : undefined}>
+      <div ref={wrapRef}>
+        <div ref={layerRef} className="will-change-transform">
+          {windowFrame}
+        </div>
       </div>
     </div>
   );

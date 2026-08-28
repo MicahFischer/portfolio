@@ -62,7 +62,7 @@ export function ProblemCard({
     <li
       ref={cardRef}
       onPointerMove={onPointerMove}
-      className={`group/shine relative flex rounded-[10px] border border-[#d6d6d8] transition-[opacity,transform] duration-700 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none [--shine-angle:0deg] ${
+      className={`group/shine relative flex rounded-[10px] border border-foreground/15 transition-[opacity,transform] duration-700 ease-out motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none [--shine-angle:0deg] ${
         inView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
       }`}
       style={{ transitionDelay: inView ? `${index * 90}ms` : "0ms" }}
@@ -70,8 +70,8 @@ export function ProblemCard({
       <div className="relative flex h-full w-full overflow-hidden rounded-[10px]">
         <div className="pointer-events-none absolute inset-0">
           <HeaderDotGrid tone="scarlet" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white" />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/80 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
         </div>
         <div
           aria-hidden
@@ -90,10 +90,10 @@ export function ProblemCard({
         <Icon
           name={problemIcons[index] ?? "warning"}
           size={96}
-          className="pointer-events-none absolute top-2 right-2 z-[1] text-black/10 transition-transform duration-300 ease-out group-hover/shine:rotate-12 motion-reduce:transition-none motion-reduce:group-hover/shine:rotate-0"
+          className="pointer-events-none absolute top-2 right-2 z-[1] text-foreground/10 transition-transform duration-300 ease-out group-hover/shine:rotate-12 motion-reduce:transition-none motion-reduce:group-hover/shine:rotate-0"
         />
         <div className="relative z-10 flex h-full w-full flex-col p-8">
-          <p className="font-sans text-[64px] leading-none font-black tracking-tight text-black/20">
+          <p className="font-sans text-[64px] leading-none font-black tracking-tight text-foreground/20">
             {String(index + 1).padStart(2, "0")}
           </p>
           <h3 className="mt-3 font-sans text-lg leading-snug font-semibold text-foreground">

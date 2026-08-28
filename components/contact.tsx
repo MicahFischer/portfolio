@@ -11,7 +11,7 @@ export function Contact() {
         <HeaderDotGrid />
       </div>
       <div className="site-width relative z-10">
-        <div className="flex max-w-[720px] flex-col items-start gap-2.5 border-x border-black/10 bg-gradient-to-b from-[#e8f3fa]/90 to-[#e5f6f2]/90 px-8 pt-16 pb-12 backdrop-blur-2xl md:px-10 md:pt-24 md:pb-16">
+        <div className="flex max-w-[720px] flex-col items-start gap-2.5 border-x border-foreground/10 bg-gradient-to-b from-(--wash-from)/90 to-(--wash-via)/90 px-8 pt-16 pb-12 backdrop-blur-2xl md:px-10 md:pt-24 md:pb-16">
           <div className="flex w-full flex-col items-start gap-2.5">
             <p className="font-mono text-[14px] leading-normal tracking-[1.4px] text-muted uppercase">
               About Me

@@ -35,7 +35,7 @@ const screenshotSlotClass =
 function ProjectCardBackdrop() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      <div className="absolute inset-0 bg-gradient-to-b from-[#e8f3fa] via-[#e5f6f2]/80 to-white" />
+      <div className="absolute inset-0 bg-gradient-to-b from-(--wash-from) via-(--wash-via)/80 to-background" />
       <HeaderDotGrid interactive={false} variant="hero" />
     </div>
   );
@@ -228,7 +228,7 @@ export function Projects() {
                 <ProjectCardBackdrop />
                 {study.image ? (
                   <div
-                    className={`${screenshotSlotClass} ${imageIn ? "slide-up" : "translate-y-[5rem]"}`}
+                    className={`${screenshotSlotClass} ${imageIn ? "slide-up" : "translate-y-7 opacity-0"}`}
                   >
                     <MacScreenshot image={study.image} alt="" />
                   </div>
@@ -301,7 +301,7 @@ export function Projects() {
                 aria-label={`Show project ${studyIndex + 1}`}
                 aria-selected={selected}
                 className={`h-2 rounded-full transition-[width,background-color] duration-300 ease-out motion-reduce:transition-none ${
-                  selected ? "w-6 bg-blue" : "w-2 bg-black/20 hover:bg-black/35"
+                  selected ? "w-6 bg-blue" : "w-2 bg-foreground/20 hover:bg-foreground/35"
                 }`}
                 onClick={() => setIndex(studyIndex)}
               />

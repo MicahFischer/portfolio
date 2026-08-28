@@ -21,7 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmMono.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${dmMono.variable} h-full antialiased`}
+    >
       <head>
         <link rel="preconnect" href="https://use.typekit.net" />
         <link rel="preconnect" href="https://p.typekit.net" crossOrigin="anonymous" />
@@ -29,7 +33,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back,arrow_forward,calculate,check,chevron_left,chevron_right,content_copy,hourglass,lock,mail,open_in_new,slab_serif,text_compare,warning&display=block"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back,arrow_forward,calculate,check,chevron_left,chevron_right,code,contact_phone,content_copy,expand_more,grid_view,hourglass,laptop_mac,lock,mail,menu_book,open_in_new,person,slab_serif,table,text_compare,warning&display=block"
         />
       </head>
       <body className="min-h-full bg-background font-sans text-foreground">

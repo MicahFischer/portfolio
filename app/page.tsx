@@ -48,7 +48,7 @@ export default function Home() {
           <HeaderDotGrid />
         </div>
         <div className="site-width relative z-10 overflow-hidden">
-          <div className="flex max-w-[720px] flex-col items-start gap-2.5 border-x border-black/10 bg-gradient-to-b from-[#e8f3fa]/90 to-[#e5f6f2]/90 px-8 py-16 backdrop-blur-2xl md:px-10 md:py-24">
+          <div className="flex max-w-[720px] flex-col items-start gap-2.5 border-x border-foreground/10 bg-gradient-to-b from-(--wash-from)/90 to-(--wash-via)/90 px-8 py-16 backdrop-blur-2xl md:px-10 md:py-24">
             <p className="font-mono text-[14px] leading-normal tracking-[1.4px] text-muted uppercase">
               Senior Product Designer
             </p>

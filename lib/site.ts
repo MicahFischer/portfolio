@@ -93,10 +93,10 @@ export const caseStudies = [
     description:
       "I simplified the LittleBird app guest access interface into an intuitive step-by-step workflow that gives users greater control over their smart home and promotes security in multifamily communities.",
     cta: "View Project",
-    href: "#",
+    href: "/work/ai-prototyping",
     status: "Shipped",
     locked: false,
-    image: "/assets/project-ai-prototype.jpg",
+    image: "/assets/project-ai-planning.jpg",
   },
   {
     eyebrow: "Case study • 2025",
@@ -144,6 +144,191 @@ export const caseStudies = [
   },
 ];
 
+export type CaseStudy = (typeof caseStudies)[number];
+
+export function getAdjacentCaseStudies(currentHref: string) {
+  const index = caseStudies.findIndex((study) => study.href === currentHref);
+  const current = index >= 0 ? index : 0;
+  const count = caseStudies.length;
+
+  return {
+    previous: caseStudies[(current - 1 + count) % count],
+    next: caseStudies[(current + 1) % count],
+  };
+}
+
+export const aiPrototypingProject = {
+  eyebrow: "Design System • AI Prototyping",
+  title:
+    "Building a Scalable AI Prototyping System for a Healthcare Workforce Management Platform",
+  lead:
+    "How I turned Kimedics’ design system and product architecture into a repeatable workflow for creating high-fidelity, interactive prototypes.",
+  image: "/assets/project-ai-prototype-hero.jpg",
+  overview: [
+    "As Kimedics grew, I remained the only designer responsible for the application end to end, supporting as many as six development teams working across a complex healthcare workforce management platform.",
+    "Traditional prototyping in Figma required significant manual production time. Every new workflow meant recreating established patterns, populating realistic data, connecting interactions, and documenting behavior for engineering.",
+    "I built an AI-assisted prototyping system that connects our design patterns, component library, and product architecture. It allows me to turn plain-language requirements into realistic, interactive prototypes in a fraction of the time while retaining control over the final experience.",
+  ],
+  role: {
+    eyebrow: "My Role",
+    title: "Accelerating design delivery during organizational growth",
+    intro:
+      "As Kimedics’ founding product designer, I led the design of the system, including:",
+    points: [
+      "Establishing the design patterns and component library that prototypes use",
+      "Documenting the application’s entities, relationships, and product logic",
+      "Creating reusable AI skills for common interface patterns",
+      "Defining requirements, edge cases, and expected behavior",
+      "Reviewing and refining generated experiences",
+      "Testing prototypes with Product, Engineering, customers, and internal stakeholders",
+    ],
+    closing:
+      "AI accelerated production, but the underlying product decisions, system design, and final design judgment remained my responsibility.",
+  },
+  challenges: {
+    eyebrow: "Challenges",
+    points: [
+      {
+        icon: "/assets/icon-monitoring.svg",
+        title: "Design demand was scaling faster than design capacity",
+        body: "As the organization expanded, I was responsible for delivering solutions across more areas of the application in parallel. Recreating established interfaces manually would have made design a bottleneck.",
+      },
+      {
+        icon: "/assets/icon-dashboard-2-edit.svg",
+        title: "High fidelity required significant production time",
+        body: "Realistic prototypes depend on more than polished screens. They need accurate data, connected interactions, validation, system states, and edge cases. Producing that fidelity manually was tedious and made it harder to explore multiple solutions quickly.",
+      },
+      {
+        icon: "/assets/icon-chat-error.svg",
+        title: "Static handoffs left behavior open to interpretation",
+        body: "A linear Figma prototype could communicate the primary path, but engineers still depended on supporting requirements and conversations to understand how the experience should behave across different conditions.",
+      },
+    ],
+  },
+  solution: {
+    eyebrow: "Solution",
+    title: "Building the system AI needed to produce reliable prototypes",
+    body: [
+      "I built a workflow that connects AI to how Kimedics actually works: its design language, components, data, logic, and structure.",
+      "Instead of asking AI to invent an interface from scratch, I gave it a defined system within which to work. Plain-language requirements could then become functional prototypes that looked and behaved like Kimedics.",
+      "The system is built on three foundations.",
+    ],
+    points: [
+      {
+        icon: "/assets/icon-extension.svg",
+        title: "Reusable design patterns",
+        body: "The component library gives AI a constrained set of patterns instead of asking it to make new design decisions with every prompt. Accessibility, validation, system states, interaction behavior, visual hierarchy, and consistency are already built into these components. This reduces production time without sacrificing the decisions embedded in the design system.",
+      },
+      {
+        icon: "/assets/icon-psychology.svg",
+        title: "Product and system context",
+        body: "I documented the application’s data model and relationships between organizations, practices, jobs, providers, assignments, shifts, and rates. This allows prototypes to use realistic, interconnected data instead of placeholder content, making complex workflows and downstream impacts easier to evaluate.",
+      },
+      {
+        icon: "/assets/icon-cycle.svg",
+        title: "Reusable AI skills",
+        body: "I created guided skills for common structures such as tables, forms, and record pages. Each skill gathers the necessary context in plain language before generating an experience from our established components and product model. This turns knowledge that previously lived in my head into a repeatable process.",
+      },
+    ],
+  },
+  process: {
+    eyebrow: "Process",
+    title: "How the workflow works",
+    steps: [
+      "I define the problem, requirements, constraints, and edge cases.",
+      "A guided skill gathers the product and interface context needed for the prototype.",
+      "AI assembles an initial experience using established components and realistic data.",
+      "I evaluate the workflow, explore alternatives, and resolve product decisions.",
+      "I refine the interaction details and final visual execution.",
+      "Product and Engineering review the functioning prototype before development begins.",
+    ],
+    closing:
+      "The system handles repetitive production work. I remain responsible for deciding what should be built and whether the resulting experience solves the problem effectively.",
+    outcomes: [
+      {
+        title: "Broader exploration",
+        body: "Multiple approaches can be created and compared quickly instead of committing to the first viable direction.",
+      },
+      {
+        title: "Deeper product thinking",
+        body: "Less time spent on manual production creates more time to evaluate requirements, tradeoffs, edge cases, and downstream impacts.",
+      },
+      {
+        title: "Earlier problem detection",
+        body: "Functional prototypes surface gaps and unanswered questions before development begins, when they are easier to resolve.",
+      },
+    ],
+  },
+  example: {
+    eyebrow: "Case Example",
+    title: "Planning Coverage Matrix",
+    opening: [
+      "Kimedics’ Planning Coverage experience helps teams understand staffing needs across practices, specialties, and labor categories.",
+      "Users needed the ability to configure two levels of grouping within the planning matrix. They could choose from:",
+    ],
+    options: [
+      "Client",
+      "Labor category",
+      "Specialty",
+      "Labor category and specialty",
+    ],
+    closing: [
+      "The two grouping levels could not be identical. Combined with the option to use no secondary grouping, the feature produced 16 valid table configurations.",
+      "Creating every variation manually would have required designing and populating each state separately. It also would have made it difficult to confirm that the hierarchy, totals, and interactions worked consistently across every combination.",
+      "Using the prototyping system, I described the grouping rules and constraints in plain language. The system generated all 16 configurations using connected sample data and functioning controls.",
+      "This allowed me to evaluate the complete behavior of the feature, not only its default state.",
+    ],
+  },
+  results: {
+    eyebrow: "Results",
+    title: "16 interactive configurations in 15–30 minutes",
+    intro:
+      "Producing and populating the same variations manually would have taken an estimated two to three days.",
+    represented: "That represented:",
+    points: [
+      "Up to 96x faster prototype production",
+      "Complete coverage of all valid grouping combinations",
+      "Realistic, connected sample data",
+      "A fully interactive experience instead of isolated static screens",
+    ],
+    closing:
+      "The time saved was reinvested in evaluating the hierarchy, identifying requirement gaps, and refining how users would configure the matrix.",
+  },
+  impact: {
+    eyebrow: "Organizational Impact",
+    points: [
+      {
+        title: "Product",
+        body: "Requirement gaps and edge cases surface before development begins, when they are less expensive to address.",
+      },
+      {
+        title: "Engineering",
+        body: "Engineers can interact with the intended behavior instead of interpreting it from a collection of static screens.",
+      },
+      {
+        title: "Design",
+        body: "Less time is spent rebuilding established patterns, leaving more time for product decisions, usability, and final execution.",
+      },
+      {
+        title: "Sales & CX",
+        body: "Interactive prototypes can communicate future functionality in customer and sales conversations before the feature is developed.",
+      },
+      {
+        title: "Company",
+        body: "The system allows one designer to support more teams and deliver higher-fidelity work across the application without lowering the quality of the final experience.",
+      },
+    ],
+  },
+  extension: {
+    eyebrow: "Extending the system",
+    body: [
+      "The next step is to connect the prototyping environment directly to the same production-grade component library used by the Kimedics application.",
+      "That would create a shared foundation across design prototypes and production development:",
+      "Instead of translating a design into a separate implementation, both environments would begin from the same components and interaction patterns. This creates stronger consistency and further reduces the gap between design intent and production behavior.",
+    ],
+  },
+};
+
 export const timeExpenseProject = {
   eyebrow: "Product Design",
   title: "Redesigning Time & Expense Entry for Healthcare Staffing Workflows",
@@ -154,7 +339,7 @@ export const timeExpenseProject = {
   ],
   meta: [
     { label: "Role", value: "Lead Product Designer" },
-    { label: "Company", value: "Kimedics (LocumTenens.com)" },
+    { label: "Company", value: "Confidential" },
     { label: "Focus", value: "Workflow redesign, prototyping, user research, validation design" },
     { label: "Timeline", value: "Q3 2025 + Ongoing enhancements" },
   ],
@@ -189,8 +374,8 @@ export const timeExpenseProject = {
       eyebrow: "Solution 1/2",
       title: "Providing timesheet approvers clarity and confidence",
       body: [
-        "Our redesign focused on clarity and actionability. Instead of a single, rigid table, we introduced two flexible views: a table layout for high-volume processing and a card view optimized for quick scanning and on-the-go decision-making. Both views present the same data — shift counts, hours worked, unit volume, and expense totals.",
-        "Each record now shows a complete picture: the total volume submitted, the assigned approver, and a real-time status indicator. Common statuses like “Pending Submission,” “Disputed,” and “Approved” are paired with contextual actions such as Submit, Resubmit, or Approve — available directly in-line. No extra clicks, no ambiguity.",
+        "Our redesign focused on clarity and actionability. Instead of a single, rigid table, we introduced two flexible views: a table layout for high-volume processing and a card view optimized for quick scanning and on-the-go decision-making. Both views present the same data: shift counts, hours worked, unit volume, and expense totals.",
+        "Each record now shows a complete picture: the total volume submitted, the assigned approver, and a real-time status indicator. Common statuses like “Pending Submission,” “Disputed,” and “Approved” are paired with contextual actions such as Submit, Resubmit, or Approve, available directly in-line. No extra clicks, no ambiguity.",
         "For teams managing dozens or even hundreds of submissions, this update was transformational.",
       ],
     },
@@ -204,4 +389,16 @@ export const timeExpenseProject = {
       ],
     },
   ],
+  views: {
+    eyebrow: "Table and card views",
+    title: "Same records, two ways to work",
+    details:
+      "Approvers see the same timesheet data in either layout: staff, practice, volume, assignee, and status. Toggle between a dense processing table and a more scannable card view.",
+    descriptions: {
+      table:
+        "The table is built for batch review. Columns keep volume, ownership, and status aligned so teams can scan and act without opening every record.",
+      cards:
+        "Cards give each timesheet more room to breathe. Volume, ownership, and status show up in a compact snapshot that's easier to read on the go.",
+    },
+  },
 };

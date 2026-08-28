@@ -123,7 +123,7 @@ export function Cursor() {
                 d="M 56,56 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0"
               />
             </defs>
-            <text className="fill-black font-sans text-[12px] font-bold tracking-[0.12em]">
+            <text className="fill-foreground font-sans text-[12px] font-bold tracking-[0.12em]">
               <textPath
                 ref={orbitTextRef}
                 href="#cursor-orbit-path"
@@ -137,11 +137,11 @@ export function Cursor() {
       </div>
       <div
         ref={circleRef}
-        className="absolute top-0 left-0 size-10 rounded-full border border-black opacity-0"
+        className="absolute top-0 left-0 size-10 rounded-full border border-foreground opacity-0"
       />
       <div
         ref={dotRef}
-        className="absolute top-0 left-0 size-1.5 rounded-full bg-black opacity-0"
+        className="absolute top-0 left-0 size-1.5 rounded-full bg-foreground opacity-0"
       />
     </div>
   );
