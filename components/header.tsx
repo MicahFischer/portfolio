@@ -17,13 +17,14 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
   useLayoutEffect(() => {
     if (!overlay) return;
 
-    const hero = document.querySelector(".hero-gradient");
-    if (!hero) return;
+    const heroNode = document.querySelector(".hero-gradient");
+    if (!(heroNode instanceof HTMLElement)) return;
+    const heroEl: HTMLElement = heroNode;
 
     function update() {
       const header = document.querySelector("header");
       const headerHeight = header?.getBoundingClientRect().height ?? 0;
-      const next = hero.getBoundingClientRect().bottom > headerHeight;
+      const next = heroEl.getBoundingClientRect().bottom > headerHeight;
       setOverHero((current) => (current === next ? current : next));
     }
 

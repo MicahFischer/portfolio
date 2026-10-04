@@ -204,10 +204,6 @@ export function HeaderDotGrid({
           glow.addColorStop(0, "rgba(70, 117, 227, 0.5)");
           glow.addColorStop(0.4, "rgba(61, 104, 204, 0.28)");
           glow.addColorStop(1, "rgba(70, 117, 227, 0)");
-        } else if (tone === "inverse") {
-          glow.addColorStop(0, "rgba(255, 255, 255, 0.16)");
-          glow.addColorStop(0.4, "rgba(255, 255, 255, 0.06)");
-          glow.addColorStop(1, "rgba(255, 255, 255, 0)");
         } else if (tone === "soft") {
           glow.addColorStop(0, "rgba(0, 0, 0, 0.1)");
           glow.addColorStop(0.4, "rgba(0, 0, 0, 0.04)");
