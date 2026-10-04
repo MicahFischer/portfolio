@@ -5,11 +5,15 @@ import { useEffect, useRef } from "react";
 export function HeaderDotGrid({
   interactive = true,
   variant = "hero",
-  tone = "default",
+  tone = "soft",
+  mode = "grid",
+  avoidSelector,
 }: {
   interactive?: boolean;
   variant?: "hero" | "card";
-  tone?: "default" | "scarlet" | "vivid";
+  tone?: "default" | "scarlet" | "vivid" | "soft" | "inverse";
+  mode?: "grid" | "dots";
+  avoidSelector?: string;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -42,13 +46,72 @@ export function HeaderDotGrid({
     let hovering = false;
     let sx = new Float32Array(0);
     let sy = new Float32Array(0);
+    let sr = new Float32Array(0);
     let live = new Uint8Array(0);
     let colCount = 0;
     let rowCount = 0;
     let cols = 0;
+    let avoidX = 0;
+    let avoidY = 0;
+    let avoidW = 0;
+    let avoidH = 0;
     const spacing = 42;
     const rowStart = -16;
     const rowEnd = 48;
+    const holePad = 80;
+    const holeFade = 56;
+
+    function updateAvoid() {
+      if (!avoidSelector) {
+        avoidW = 0;
+        return;
+      }
+      const host = canvas.closest("section") ?? canvas.parentElement;
+      const el =
+        host?.querySelector(avoidSelector) ??
+        document.querySelector(avoidSelector);
+      if (!(el instanceof HTMLElement)) {
+        avoidW = 0;
+        return;
+      }
+      const canvasRect = canvas.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      avoidX = elRect.left - canvasRect.left;
+      avoidY = elRect.top - canvasRect.top;
+      avoidW = elRect.width;
+      avoidH = elRect.height;
+    }
+
+    function holeAlpha(x: number, y: number) {
+      if (avoidW <= 0) return 1;
+      const left = avoidX - holePad;
+      const top = avoidY - holePad;
+      const right = avoidX + avoidW + holePad;
+      const bottom = avoidY + avoidH + holePad;
+      if (x <= left || x >= right || y <= top || y >= bottom) return 1;
+      const inset = Math.min(x - left, right - x, y - top, bottom - y);
+      if (inset >= holeFade) return 0;
+      return 1 - inset / holeFade;
+    }
+
+    function markColor() {
+      if (mode === "dots") {
+        return tone === "inverse" || variant === "card"
+          ? "rgba(255, 255, 255, 0.32)"
+          : "rgba(0, 0, 0, 0.22)";
+      }
+      return variant === "card"
+        ? "rgba(255, 255, 255, 0.28)"
+        : tone === "scarlet"
+          ? "rgba(0, 0, 0, 0.1)"
+          : tone === "vivid"
+            ? "rgba(70, 117, 227, 0.35)"
+            : tone === "inverse"
+              ? "rgba(255, 255, 255, 0.12)"
+              : tone === "soft"
+                ? "rgba(0, 0, 0, 0.1)"
+                : "rgba(0, 0, 0, 0.14)";
+    }
 
     function resize() {
       const parent = canvas.parentElement;
@@ -69,6 +132,8 @@ export function HeaderDotGrid({
       sx = new Float32Array(count);
       sy = new Float32Array(count);
       live = new Uint8Array(count);
+      sr = new Float32Array(count);
+      updateAvoid();
     }
 
     function onMove(event: PointerEvent) {
@@ -101,27 +166,28 @@ export function HeaderDotGrid({
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, width, height);
+      if (mode === "dots") updateAvoid();
 
-      if (variant === "hero") {
+      if (variant === "hero" && tone !== "soft" && tone !== "inverse") {
         const wash = ctx.createLinearGradient(0, height, width, 0);
         if (tone === "scarlet") {
           wash.addColorStop(0, "rgba(234, 88, 12, 0.32)");
           wash.addColorStop(0.45, "rgba(249, 115, 22, 0.48)");
           wash.addColorStop(1, "rgba(220, 70, 20, 0.68)");
         } else if (tone === "vivid") {
-          wash.addColorStop(0, "rgba(44, 181, 160, 0.55)");
-          wash.addColorStop(0.45, "rgba(34, 148, 172, 0.42)");
-          wash.addColorStop(1, "rgba(26, 132, 148, 0.58)");
+          wash.addColorStop(0, "rgba(70, 117, 227, 0.55)");
+          wash.addColorStop(0.45, "rgba(70, 117, 227, 0.42)");
+          wash.addColorStop(1, "rgba(61, 104, 204, 0.58)");
         } else {
-          wash.addColorStop(0, "rgba(44, 181, 160, 0.18)");
-          wash.addColorStop(0.45, "rgba(34, 148, 172, 0.12)");
-          wash.addColorStop(1, "rgba(26, 132, 148, 0.16)");
+          wash.addColorStop(0, "rgba(70, 117, 227, 0.18)");
+          wash.addColorStop(0.45, "rgba(70, 117, 227, 0.12)");
+          wash.addColorStop(1, "rgba(61, 104, 204, 0.16)");
         }
         ctx.fillStyle = wash;
         ctx.fillRect(0, 0, width, height);
       }
 
-      if (interactive && hoverMix > 0.01) {
+      if (interactive && hoverMix > 0.01 && mode !== "dots" && tone !== "inverse") {
         const glow = ctx.createRadialGradient(
           currentX,
           currentY,
@@ -135,13 +201,21 @@ export function HeaderDotGrid({
           glow.addColorStop(0.4, "rgba(234, 88, 12, 0.28)");
           glow.addColorStop(1, "rgba(194, 65, 12, 0)");
         } else if (tone === "vivid") {
-          glow.addColorStop(0, "rgba(44, 181, 160, 0.5)");
-          glow.addColorStop(0.4, "rgba(26, 132, 148, 0.28)");
-          glow.addColorStop(1, "rgba(26, 132, 148, 0)");
+          glow.addColorStop(0, "rgba(70, 117, 227, 0.5)");
+          glow.addColorStop(0.4, "rgba(61, 104, 204, 0.28)");
+          glow.addColorStop(1, "rgba(70, 117, 227, 0)");
+        } else if (tone === "inverse") {
+          glow.addColorStop(0, "rgba(255, 255, 255, 0.16)");
+          glow.addColorStop(0.4, "rgba(255, 255, 255, 0.06)");
+          glow.addColorStop(1, "rgba(255, 255, 255, 0)");
+        } else if (tone === "soft") {
+          glow.addColorStop(0, "rgba(0, 0, 0, 0.1)");
+          glow.addColorStop(0.4, "rgba(0, 0, 0, 0.04)");
+          glow.addColorStop(1, "rgba(0, 0, 0, 0)");
         } else {
-          glow.addColorStop(0, "rgba(44, 181, 160, 0.32)");
-          glow.addColorStop(0.4, "rgba(26, 132, 148, 0.14)");
-          glow.addColorStop(1, "rgba(26, 132, 148, 0)");
+          glow.addColorStop(0, "rgba(70, 117, 227, 0.32)");
+          glow.addColorStop(0.4, "rgba(61, 104, 204, 0.14)");
+          glow.addColorStop(1, "rgba(70, 117, 227, 0)");
         }
         ctx.globalAlpha = hoverMix;
         ctx.fillStyle = glow;
@@ -204,51 +278,73 @@ export function HeaderDotGrid({
 
           sx[index] = screenX;
           sy[index] = screenY;
+          sr[index] = Math.max(0.85, Math.min(2.6, 1.45 * scale));
           live[index] = 1;
-        }
-      }
-
-      ctx.beginPath();
-      for (let row = 0; row < rowCount; row += 1) {
-        let drawing = false;
-        const rowOffset = row * colCount;
-        for (let col = 0; col < colCount; col += 1) {
-          const i = rowOffset + col;
-          if (!live[i]) {
-            drawing = false;
-            continue;
-          }
-          if (drawing) ctx.lineTo(sx[i], sy[i]);
-          else ctx.moveTo(sx[i], sy[i]);
-          drawing = true;
-        }
-      }
-      for (let col = 0; col < colCount; col += 1) {
-        let drawing = false;
-        for (let row = 0; row < rowCount; row += 1) {
-          const i = row * colCount + col;
-          if (!live[i]) {
-            drawing = false;
-            continue;
-          }
-          if (drawing) ctx.lineTo(sx[i], sy[i]);
-          else ctx.moveTo(sx[i], sy[i]);
-          drawing = true;
         }
       }
 
       ctx.lineJoin = "round";
       ctx.lineCap = "round";
       ctx.lineWidth = 1;
-      ctx.strokeStyle =
-        variant === "card"
-          ? "rgba(255, 255, 255, 0.28)"
-          : tone === "scarlet"
-            ? "rgba(0, 0, 0, 0.1)"
-            : tone === "vivid"
-              ? "rgba(26, 132, 148, 0.28)"
-              : "rgba(0, 0, 0, 0.14)";
-      ctx.stroke();
+      ctx.strokeStyle = markColor();
+      ctx.fillStyle = markColor();
+
+      if (mode === "dots") {
+        ctx.beginPath();
+        const faded: number[] = [];
+        for (let i = 0; i < live.length; i += 1) {
+          if (!live[i]) continue;
+          const x = sx[i];
+          const y = sy[i];
+          const alpha = holeAlpha(x, y);
+          if (alpha <= 0.02) continue;
+          const r = sr[i];
+          if (alpha >= 0.98) {
+            ctx.moveTo(x + r, y);
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+          } else {
+            faded.push(x, y, r, alpha);
+          }
+        }
+        ctx.fill();
+        for (let i = 0; i < faded.length; i += 4) {
+          ctx.globalAlpha = faded[i + 3];
+          ctx.beginPath();
+          ctx.arc(faded[i], faded[i + 1], faded[i + 2], 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      } else {
+        ctx.beginPath();
+        for (let row = 0; row < rowCount; row += 1) {
+          let drawing = false;
+          const rowOffset = row * colCount;
+          for (let col = 0; col < colCount; col += 1) {
+            const i = rowOffset + col;
+            if (!live[i]) {
+              drawing = false;
+              continue;
+            }
+            if (drawing) ctx.lineTo(sx[i], sy[i]);
+            else ctx.moveTo(sx[i], sy[i]);
+            drawing = true;
+          }
+        }
+        for (let col = 0; col < colCount; col += 1) {
+          let drawing = false;
+          for (let row = 0; row < rowCount; row += 1) {
+            const i = row * colCount + col;
+            if (!live[i]) {
+              drawing = false;
+              continue;
+            }
+            if (drawing) ctx.lineTo(sx[i], sy[i]);
+            else ctx.moveTo(sx[i], sy[i]);
+            drawing = true;
+          }
+        }
+        ctx.stroke();
+      }
 
       if (interactive) {
         frame = window.requestAnimationFrame(draw);
@@ -265,6 +361,12 @@ export function HeaderDotGrid({
         })
       : null;
     observer?.observe(parent ?? canvas);
+    const avoidEl = avoidSelector
+      ? (canvas.closest("section") ?? canvas.parentElement)?.querySelector(
+          avoidSelector,
+        )
+      : null;
+    if (avoidEl) observer?.observe(avoidEl);
 
     if (interactive) {
       window.addEventListener("pointermove", onMove, { passive: true });
@@ -272,6 +374,11 @@ export function HeaderDotGrid({
     } else {
       draw(0);
     }
+
+    void document.fonts?.ready?.then(() => {
+      updateAvoid();
+      if (!interactive) draw(0);
+    });
 
     function onResize() {
       resize();
@@ -284,7 +391,7 @@ export function HeaderDotGrid({
       window.removeEventListener("resize", onResize);
       observer?.disconnect();
     };
-  }, [interactive, variant, tone]);
+  }, [interactive, variant, tone, mode, avoidSelector]);
 
   return (
     <canvas

@@ -8,9 +8,13 @@ import { EMAIL } from "@/lib/site";
 
 type CopyEmailButtonProps = {
   className?: string;
+  tone?: "default" | "inverse";
 };
 
-export function CopyEmailButton({ className = "" }: CopyEmailButtonProps) {
+export function CopyEmailButton({
+  className = "",
+  tone = "default",
+}: CopyEmailButtonProps) {
   const [copied, setCopied] = useState(false);
   const timer = useRef<number>(0);
 
@@ -31,6 +35,7 @@ export function CopyEmailButton({ className = "" }: CopyEmailButtonProps) {
   return (
     <PillButton
       onClick={handleCopy}
+      tone={tone}
       className={className}
       aria-label={copied ? "Copied!" : "Copy Email"}
     >

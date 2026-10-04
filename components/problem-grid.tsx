@@ -1,4 +1,5 @@
 import { ProblemCard } from "@/components/problem-card";
+import { Reveal } from "@/components/reveal";
 
 export function ProblemGrid({
   eyebrow,
@@ -13,12 +14,16 @@ export function ProblemGrid({
     <div className="flex flex-col gap-8 pt-[100px] pb-[100px]">
       <div className="site-width">
         <div className="flex flex-col items-start gap-2.5">
-          <p className="font-mono text-[14px] leading-normal tracking-[1.4px] text-muted uppercase">
-            {eyebrow}
-          </p>
-          <h2 className="heading text-[36px] text-nowrap text-foreground max-md:text-wrap">
-            {title}
-          </h2>
+          <Reveal>
+            <p className="font-mono text-[14px] leading-normal tracking-[1.4px] text-muted uppercase">
+              {eyebrow}
+            </p>
+          </Reveal>
+          <Reveal delay={90}>
+            <h2 className="heading text-[36px] text-nowrap text-foreground max-md:text-wrap">
+              {title}
+            </h2>
+          </Reveal>
         </div>
       </div>
 

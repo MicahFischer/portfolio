@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Contact } from "@/components/contact";
 import { CopyEmailButton } from "@/components/copy-email-button";
 import { Footer } from "@/components/footer";
@@ -19,11 +20,11 @@ export default function WorkPage() {
       <Header />
 
       <section className="under-header relative bg-background">
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <HeaderDotGrid />
+        <div className="pointer-events-none absolute inset-0 overflow-hidden [mask-image:linear-gradient(to_bottom,black,black_72%,transparent)]">
+          <HeaderDotGrid tone="soft" />
         </div>
         <div className="site-width relative z-10 overflow-hidden">
-          <div className="flex max-w-[680px] flex-col items-start gap-2.5 border-x border-foreground/10 bg-gradient-to-b from-(--wash-from)/90 to-(--wash-via)/90 px-8 py-16 backdrop-blur-2xl md:px-10 md:py-24">
+          <div className="flex max-w-[680px] flex-col items-start gap-2.5 px-8 py-16 md:px-10 md:py-24">
             <p className="font-mono text-[14px] leading-normal tracking-[1.4px] text-muted uppercase">
               Micah Fischer
             </p>
@@ -70,16 +71,19 @@ export default function WorkPage() {
                 </p>
                 <div className="mt-4 flex flex-wrap items-center gap-4">
                   {study.locked || !study.href ? (
-                    <span className="inline-flex h-9 items-center rounded-[4px] bg-blue px-3 font-sans text-sm leading-none font-bold text-white">
+                    <span className="inline-flex h-9 items-center rounded-[4px] bg-black px-3 font-sans text-sm leading-none font-bold text-white">
                       {study.cta}
                     </span>
                   ) : (
-                    <span className="inline-flex h-9 items-center rounded-[4px] bg-blue px-4 font-sans text-sm leading-none font-bold text-white">
+                    <Link
+                      href={study.href}
+                      className="inline-flex h-9 items-center rounded-[4px] bg-black px-4 font-sans text-sm leading-none font-bold text-white"
+                    >
                       {study.cta}
-                    </span>
+                    </Link>
                   )}
                   <span className="inline-flex items-center gap-2 font-mono text-[14px] leading-normal tracking-[1.4px] text-muted uppercase">
-                    <Icon name="check" className="text-blue" />
+                    <Icon name="check" className="text-foreground" />
                     {study.status}
                   </span>
                 </div>

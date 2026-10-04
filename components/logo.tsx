@@ -2,10 +2,21 @@ import Link from "next/link";
 
 type LogoProps = {
   size?: "header" | "footer";
+  invert?: boolean;
 };
 
-export function Logo({ size = "header" }: LogoProps) {
+export function Logo({ size = "header", invert = false }: LogoProps) {
   const isHeader = size === "header";
+  const nameSrc = invert
+    ? "/assets/logo-name-white.svg"
+    : isHeader
+      ? "/assets/logo-name.svg"
+      : "/assets/logo-name-sm.svg";
+  const titleSrc = invert
+    ? "/assets/logo-title-white.svg"
+    : isHeader
+      ? "/assets/logo-title.svg"
+      : "/assets/logo-title-sm.svg";
 
   return (
     <Link
@@ -13,28 +24,30 @@ export function Logo({ size = "header" }: LogoProps) {
       aria-label="Micah Fischer, Product Designer"
       className="relative block shrink-0"
       style={
-        isHeader
+        isHeader || invert
           ? { width: 180, height: 43 }
           : { width: 152, height: 36 }
       }
     >
       <img
-        src={isHeader ? "/assets/logo-name.svg" : "/assets/logo-name-sm.svg"}
+        src={nameSrc}
         alt="Micah Fischer"
-        width={isHeader ? 180 : 152}
-        height={isHeader ? 27 : 23}
+        width={invert || isHeader ? 180 : 152}
+        height={invert || isHeader ? 27.311 : 23}
         className="absolute top-0 left-0 h-auto max-w-none"
       />
       <img
-        src={isHeader ? "/assets/logo-title.svg" : "/assets/logo-title-sm.svg"}
+        src={titleSrc}
         alt=""
-        width={isHeader ? 147 : 124}
-        height={isHeader ? 10 : 8}
+        width={invert || isHeader ? 147.221 : 124}
+        height={invert || isHeader ? 9.822 : 8}
         className="absolute max-w-none"
         style={
-          isHeader
-            ? { top: 33, left: 16 }
-            : { top: 28, left: 14 }
+          invert
+            ? { top: 32.93, left: 16.38 }
+            : isHeader
+              ? { top: 33, left: 16 }
+              : { top: 28, left: 14 }
         }
       />
     </Link>

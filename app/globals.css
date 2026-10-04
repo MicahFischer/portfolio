@@ -1,30 +1,34 @@
-@import url("https://use.typekit.net/fqh4bhq.css");
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --blue: #1a8494;
-  --sea: #2cb5a0;
-  --sea-strong: #1a8072;
-  --sage: var(--blue);
+  --accent: #4675e3;
+  --accent-light: #5b89ee;
+  --accent-strong: #3d68cc;
+  --hero-from: #07133f;
+  --hero-to: #2454dc;
+  --blue: var(--accent);
+  --sea: var(--accent);
+  --sea-strong: var(--accent-strong);
+  --sage: var(--accent);
   --ink: #333333;
   --muted: #666666;
-  --surface: #f3f5f8;
+  --surface: #f5f5f5;
   --header: rgba(255, 255, 255, 0.28);
   --rule: rgba(0, 0, 0, 0.6);
-  --highlight: var(--blue);
-  --highlight-strong: #146e7c;
-  --wash-from: #e8f3fa;
-  --wash-via: #e5f6f2;
-  --font-neue-haas: "neue-haas-grotesk-display", "Neue Haas Grotesk Display Pro",
-    "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-new-kansas: "new-kansas", Georgia, serif;
+  --highlight: var(--accent);
+  --highlight-strong: var(--accent-strong);
+  --wash-from: #f5f5f5;
+  --wash-via: #f5f5f5;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-strong: var(--accent-strong);
   --color-blue: var(--blue);
   --color-sea: var(--sea);
   --color-sea-strong: var(--sea-strong);
@@ -36,9 +40,11 @@
   --color-rule: var(--rule);
   --color-highlight: var(--highlight);
   --color-highlight-strong: var(--highlight-strong);
-  --font-sans: var(--font-neue-haas);
+  --font-sans: var(--font-general-sans);
+  --font-serif: var(--font-recia);
   --font-mono: var(--font-dm-mono);
-  --font-heading: var(--font-new-kansas);
+  --font-heading: var(--font-general-sans);
+  --font-display: var(--font-general-sans);
 }
 
 @utility btn-label {
@@ -47,12 +53,21 @@
   text-box: trim-both cap alphabetic;
 }
 
+@utility hero-gradient {
+  background-image: linear-gradient(
+    112deg,
+    var(--hero-from) 0%,
+    #163fc9 46%,
+    var(--hero-to) 100%
+  );
+}
+
 @utility heading {
   font-family: var(--font-heading);
-  font-weight: 400;
+  font-weight: 600;
   font-style: normal;
   line-height: 1.15;
-  letter-spacing: 0;
+  letter-spacing: -0.02em;
 }
 
 @utility site-width {
@@ -85,7 +100,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-neue-haas);
+  font-family: var(--font-general-sans);
 }
 
 html.has-custom-cursor,
@@ -265,7 +280,7 @@ html.has-custom-cursor * {
 }
 
 ::selection {
-  background: var(--blue);
+  background: var(--accent);
   color: #ffffff;
 }
 

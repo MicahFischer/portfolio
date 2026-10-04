@@ -45,7 +45,7 @@ function Chevron({
       <path
         d={across ? "M2 2 L11 12 L2 22" : "M2 2 L12 11 L22 2"}
         fill="none"
-        stroke="#8fc4c8"
+        stroke="#4675e3"
         strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"

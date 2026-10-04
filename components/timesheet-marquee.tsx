@@ -20,7 +20,7 @@ export function TimesheetMarquee() {
     <div className="w-full min-w-0 max-w-[480px] self-start lg:shrink-0">
       <div
         aria-label="Scrolling examples of timesheet cards"
-        className="timesheet-marquee relative -mx-8 overflow-hidden px-8"
+        className="timesheet-marquee relative overflow-hidden"
       >
         <div className="timesheet-marquee-track flex w-full flex-col">
           <CardColumn />

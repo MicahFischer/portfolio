@@ -110,6 +110,17 @@ export const caseStudies = [
     locked: false,
     image: "/assets/project-time-expense.jpg",
   },
+  {
+    eyebrow: "Case study • 2023",
+    title:
+      "Redesigning guest access around convenience and security",
+    description:
+      "I simplified the LittleBird app guest access interface into an intuitive step-by-step workflow that gives users greater control over their smart home and promotes security in multifamily communities.",
+    cta: "View Project",
+    href: "/work/guest-access",
+    status: "Shipped",
+    locked: false,
+  },
 ];
 
 export type CaseStudy = (typeof caseStudies)[number];
@@ -117,11 +128,10 @@ export type CaseStudy = (typeof caseStudies)[number];
 export function getAdjacentCaseStudies(currentHref: string) {
   const index = caseStudies.findIndex((study) => study.href === currentHref);
   const current = index >= 0 ? index : 0;
-  const count = caseStudies.length;
 
   return {
-    previous: caseStudies[(current - 1 + count) % count],
-    next: caseStudies[(current + 1) % count],
+    previous: current > 0 ? caseStudies[current - 1] : null,
+    next: current < caseStudies.length - 1 ? caseStudies[current + 1] : null,
   };
 }
 
@@ -368,5 +378,46 @@ export const timeExpenseProject = {
       cards:
         "Cards give each timesheet more room to breathe. Volume, ownership, and status show up in a compact snapshot that's easier to read on the go.",
     },
+  },
+};
+
+export const guestAccessProject = {
+  eyebrow: "Mobile app",
+  title: "Redesigning guest access around convenience and security",
+  overview: [
+    "LittleBird brought connected access, video intercom, and property management into one experience for multifamily communities. Guest access sat at the intersection of convenience and security: residents needed an easy way to let people in without giving away lasting control of their homes.",
+    "I redesigned the experience from initial setup through ongoing guest management, creating a clear, step-by-step workflow that gave residents more control over where and when guests could enter while helping communities maintain stronger security.",
+  ],
+  meta: [
+    { label: "Role", value: "Product Designer" },
+    { label: "Company", value: "LevelUp (LittleBird & GateHawk)" },
+    { label: "Focus", value: "Mobile App Design" },
+    { label: "Timeline", value: "Q4 2022-Q1 2023" },
+  ],
+  challenges: {
+    eyebrow: "Challenges",
+    title:
+      "Security-sensitive choices were buried in a single overwhelming screen",
+    body: [
+      "The original experience combined the guest list and access setup within a screen containing more than 12 options. Residents had to enter contact information, select an access level, and configure a schedule without enough context to understand the implications of each choice.",
+      "This created cognitive overload and increased the risk of residents granting broader or longer access than intended.",
+      "Through interviews with residents, property guests, and property managers, I learned that users needed the same flexibility presented through a clearer decision-making process. I also reviewed competing access-control applications to understand how similar products explained permissions and recurring schedules.",
+    ],
+  },
+  solution: {
+    eyebrow: "Solution",
+    title: "Turning a complex form into a guided access flow",
+    body: [
+      "I separated guest management from guest creation and reorganized setup around three decisions: identifying the guest, choosing where they could go, and determining when their credentials would work.",
+      "Each decision became a focused step with supporting copy that explained the available options. The interface only revealed additional controls when they were relevant, simplifying common scenarios without removing advanced scheduling capabilities.",
+    ],
+  },
+  guestManagement: {
+    eyebrow: "Guest management",
+    title: "Making active access easy to review and manage",
+    body: [
+      "A dedicated guest list gives residents a clear view of everyone with active access. Each record displays the guest’s contact information, access type, and access period.",
+      "Residents can add someone from their contacts, update existing permissions, or remove a guest without navigating through the creation flow.",
+    ],
   },
 };

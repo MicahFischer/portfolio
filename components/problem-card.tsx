@@ -69,7 +69,7 @@ export function ProblemCard({
     >
       <div className="relative flex h-full w-full overflow-hidden rounded-[10px]">
         <div className="pointer-events-none absolute inset-0">
-          <HeaderDotGrid tone="scarlet" />
+          <HeaderDotGrid tone="vivid" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/80 to-background" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
         </div>
@@ -96,7 +96,7 @@ export function ProblemCard({
           <p className="font-sans text-[64px] leading-none font-black tracking-tight text-foreground/20">
             {String(index + 1).padStart(2, "0")}
           </p>
-          <h3 className="mt-3 font-sans text-lg leading-snug font-semibold text-foreground">
+          <h3 className="heading mt-3 text-lg text-foreground">
             {heading}
           </h3>
           <p className="mt-2 font-sans text-base leading-[1.5] text-muted">

@@ -1,7 +1,52 @@
 import { Cursor } from "@/components/cursor";
 import type { Metadata } from "next";
 import { DM_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+
+const generalSans = localFont({
+  src: [
+    {
+      path: "./fonts/GeneralSans-Variable.woff2",
+      weight: "200 700",
+      style: "normal",
+    },
+    {
+      path: "./fonts/GeneralSans-VariableItalic.woff2",
+      weight: "200 700",
+      style: "italic",
+    },
+  ],
+  variable: "--font-general-sans",
+  display: "swap",
+});
+
+const recia = localFont({
+  src: [
+    {
+      path: "./fonts/Recia-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Recia-Italic.woff2",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "./fonts/Recia-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Recia-BoldItalic.woff2",
+      weight: "700",
+      style: "italic",
+    },
+  ],
+  variable: "--font-recia",
+  display: "swap",
+});
 
 const dmMono = DM_Mono({
   subsets: ["latin"],
@@ -24,11 +69,9 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${dmMono.variable} h-full antialiased`}
+      className={`${generalSans.variable} ${recia.variable} ${dmMono.variable} h-full antialiased`}
     >
       <head>
-        <link rel="preconnect" href="https://use.typekit.net" />
-        <link rel="preconnect" href="https://p.typekit.net" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

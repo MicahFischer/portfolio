@@ -3,6 +3,7 @@
 import { Open_Sans } from "next/font/google";
 import { useState, type CSSProperties } from "react";
 import { Icon } from "@/components/icon";
+import { Reveal } from "@/components/reveal";
 import {
   TimesheetCard,
   StaffAgencyLine,
@@ -267,30 +268,39 @@ export function TimesheetViewSwitcher({
     <div className="flex w-full min-w-0 flex-col gap-10">
       <div className="flex w-full flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
         <div className="flex min-w-0 flex-col items-start gap-2.5">
-          <p className="font-mono text-[14px] leading-normal tracking-[1.4px] text-muted uppercase">
-            {eyebrow}
-          </p>
-          <h2 className="heading max-w-[540px] text-[36px] text-balance text-foreground">
-            {title}
-          </h2>
-          <p className="max-w-[720px] font-sans text-base leading-[1.5] text-muted">
-            {details}
-          </p>
-          <p
-            key={view}
-            aria-live="polite"
-            className={`max-w-[720px] font-sans text-base leading-[1.5] text-pretty text-ink ${
-              animate ? "timesheet-copy-enter" : ""
-            }`}
-          >
-            {descriptions[view]}
-          </p>
+          <Reveal>
+            <p className="font-mono text-[14px] leading-normal tracking-[1.4px] text-muted uppercase">
+              {eyebrow}
+            </p>
+          </Reveal>
+          <Reveal delay={90}>
+            <h2 className="heading max-w-[540px] text-[36px] text-balance text-foreground">
+              {title}
+            </h2>
+          </Reveal>
+          <Reveal delay={180}>
+            <p className="max-w-[720px] font-sans text-base leading-[1.5] text-muted">
+              {details}
+            </p>
+          </Reveal>
+          <Reveal delay={270}>
+            <p
+              key={view}
+              aria-live="polite"
+              className={`max-w-[720px] font-sans text-base leading-[1.5] text-pretty text-ink ${
+                animate ? "timesheet-copy-enter" : ""
+              }`}
+            >
+              {descriptions[view]}
+            </p>
+          </Reveal>
         </div>
-        <div
-          role="tablist"
-          aria-label="Timesheet layout"
-          className="relative inline-flex h-12 shrink-0 items-center rounded-full border border-foreground/10 bg-gradient-to-b from-white/55 to-white/15 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_10px_24px_rgba(15,23,42,0.12)] backdrop-blur-md"
-        >
+        <Reveal delay={120}>
+          <div
+            role="tablist"
+            aria-label="Timesheet layout"
+            className="relative inline-flex h-12 shrink-0 items-center rounded-full border border-foreground/10 bg-gradient-to-b from-white/55 to-white/15 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_10px_24px_rgba(15,23,42,0.12)] backdrop-blur-md"
+          >
           <span aria-hidden className="pointer-events-none absolute inset-1">
             <span
               className={`block h-full w-1/2 rounded-full bg-foreground transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
@@ -320,28 +330,31 @@ export function TimesheetViewSwitcher({
               </button>
             );
           })}
-        </div>
+          </div>
+        </Reveal>
       </div>
 
-      {view === "table" ? (
-        <TimesheetTable animate={animate} />
-      ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {timesheetExamples.map((card, index) => (
-            <div
-              key={card.name}
-              className={animate ? "timesheet-enter" : undefined}
-              style={
-                animate
-                  ? ({ "--enter-i": index } as CSSProperties)
-                  : undefined
-              }
-            >
-              <TimesheetCard card={card} />
-            </div>
-          ))}
-        </div>
-      )}
+      <Reveal delay={180}>
+        {view === "table" ? (
+          <TimesheetTable animate={animate} />
+        ) : (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {timesheetExamples.map((card, index) => (
+              <div
+                key={card.name}
+                className={animate ? "timesheet-enter" : undefined}
+                style={
+                  animate
+                    ? ({ "--enter-i": index } as CSSProperties)
+                    : undefined
+                }
+              >
+                <TimesheetCard card={card} />
+              </div>
+            ))}
+          </div>
+        )}
+      </Reveal>
     </div>
   );
 }

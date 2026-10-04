@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
+import { CaseStudyBackLink, CaseStudyNav } from "@/components/case-study-nav";
 import { CoverageMatrix } from "@/components/coverage-matrix";
-import { FrostLink } from "@/components/frost-button";
 import { Header } from "@/components/header";
 import { HeaderDotGrid } from "@/components/header-dot-grid";
-import { Icon } from "@/components/icon";
 import { MacScreenshot } from "@/components/mac-screenshot";
 import { Reveal } from "@/components/reveal";
 import { SlideUp } from "@/components/slide-up";
 import { SystemExtensionDiagram } from "@/components/system-extension-diagram";
-import { CaseStudyNav } from "@/components/case-study-nav";
 import { aiPrototypingProject } from "@/lib/site";
 
 type IconPoint = {
@@ -62,24 +60,14 @@ export default function AiPrototypingPage() {
 
       <section className="relative z-0 -mt-[8.25rem] w-full overflow-hidden bg-background pt-[calc(8.25rem+100px)] pb-12 md:-mt-[5.75rem] md:pt-[calc(5.75rem+100px)]">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-(--wash-from) via-(--wash-via)/80 to-transparent" />
-          <HeaderDotGrid />
+          <HeaderDotGrid tone="soft" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/80 to-background" />
         </div>
         <div className="site-width relative z-10 flex flex-col items-start gap-8">
           <div className="flex w-full max-w-[720px] flex-col gap-8">
             <div className="flex flex-col items-start gap-2.5">
               <SlideUp className="flex items-center gap-3">
-                <FrostLink
-                  href="/#work"
-                  aria-label="Back to projects"
-                  className="size-10"
-                >
-                  <Icon
-                    name="arrow_back"
-                    className="transition-transform duration-300 group-hover:-translate-x-0.5"
-                  />
-                </FrostLink>
+                <CaseStudyBackLink />
                 <p className="font-mono text-[14px] leading-normal tracking-[1.4px] text-muted uppercase">
                   {project.eyebrow}
                 </p>
